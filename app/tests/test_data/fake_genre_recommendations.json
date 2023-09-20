@@ -1,0 +1,34 @@
+{
+    "tracks": [
+        {
+            "album": {
+                "id": "hdh8ayd7a78",
+                "name": "Cool Album Name"
+            },
+            "artists": [
+                {
+                    "id": "hfh8787f8sh",
+                    "name": "Cool Band Name"
+                }
+            ],
+            "id": "8ry772tet782t7",
+            "name": "Cool Song",
+            "uri": "spotify:artist:8ry772tet782t7"
+        },
+        {
+            "album": {
+                "id": "hr9y37yr7y39",
+                "name": "Cooler Album Name"
+            },
+            "artists": [
+                {
+                    "id": "gf7g37g386",
+                    "name": "Cooler Band Name"
+                }
+            ],
+            "id": "yr3y7y73y8",
+            "name": "Cooler Song",
+            "uri": "spotify:artist:yr3y7y73y8"
+        }
+    ]
+}

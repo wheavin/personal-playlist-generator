@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2>{{ playlist_content.name }}</h2>
+<div class="media-body">
+    <ul>
+        {% for playlist_track in playlist_content.tracks %}
+        <li>
+            <b>{{ playlist_track.title }}</b><br>
+            {{ playlist_track.artist.name }} - {{ playlist_track.album.name }}
+            <br>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="save-playlist">
+    <p>
+        <input type="text" id="playlistNameField">
+        <button type="button" id="savePlaylistButton">Save</button>
+        <label id="messageLabel"></label>
+    </p>
+    <script>
+        currentDate = new Date();
+        startDate = new Date(currentDate.getFullYear(), 0, 1);
+        var days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+        var weekNumber = Math.ceil(days / 7);
+        var currentYear = currentDate.getFullYear();
+
+        var playlistName = "{{ playlist_content.name }} - " + currentYear + " Week " + weekNumber;
+        document.getElementById("playlistNameField").value = playlistName;
+    </script>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#savePlaylistButton").click(function () {
+            var newPlaylistName = $("#playlistNameField").val();
+            var playlistContentJson = JSON.parse({{ playlist_content.to_json() | tojson }});
+            var playlistTracks = playlistContentJson["tracks"];
+            var playlistDataToPost = JSON.stringify({ "name": newPlaylistName, "tracks": playlistTracks });
+            console.log("Creating playlist '" + newPlaylistName + "'");
+
+            $.ajax({
+                url: "/playlist",
+                type: "post",
+                contentType: "application/json",
+                data: playlistDataToPost,
+                success: function (response) {
+                    console.log("Successfully created playlist '" + newPlaylistName + "'");
+                    document.getElementById("messageLabel").value = "Saved!";
+                    location.reload();
+                },
+                error: function (xhr) {
+                    console.log("Error occurred creating playlist '" + newPlaylistName + "'");
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

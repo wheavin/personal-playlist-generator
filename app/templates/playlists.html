@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2>My Playlists</h2>
+<ul>
+    {% for playlist in playlists %}
+    <li><a href="/playlist?id={{ playlist.id }}&name={{ playlist.name }}">{{ playlist.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

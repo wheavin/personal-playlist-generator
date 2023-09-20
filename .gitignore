@@ -1,0 +1,16 @@
+node_modules/
+
+# Python
+.cache
+.pytest_cache
+__pycache__
+venv
+
+# Flask
+.flaskenv
+
+# Pycharm, Intellij
+.idea
+
+# App
+app-config.properties

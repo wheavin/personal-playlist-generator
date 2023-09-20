@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "track": {
+        "album": {
+          "id": "ufhuhw989378",
+          "name": "Cool Album Name"
+        },
+        "artists": [
+          {
+            "id": "hfh8787f8sh",
+            "name": "Cool Band Name"
+          }
+        ],
+        "id": "hfh8y7934y93y",
+        "name": "Cool Song",
+        "uri": "spotify:artist:hfh8y7934y93y"
+      }
+    }
+  ]
+}
