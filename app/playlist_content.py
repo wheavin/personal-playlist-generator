@@ -2,6 +2,8 @@
 
 import json
 
+from app.domain.music_domain import Artist, Album, Track
+
 
 class Playlist:
 
@@ -65,32 +67,6 @@ class PlaylistContent:
     def _parse_album(playlist_track):
         track_album = playlist_track['album']
         return Album(name=track_album['name'], album_id=track_album['id'])
-
-    def to_json(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
-
-
-class Artist:
-
-    def __init__(self, name, artist_id) -> None:
-        self.name = name
-        self.id = artist_id
-
-
-class Album:
-
-    def __init__(self, name, album_id) -> None:
-        self.name = name
-        self.id = album_id
-
-
-class Track:
-
-    def __init__(self, title, uri, artist, album) -> None:
-        self.uri = uri
-        self.title = title
-        self.artist = artist
-        self.album = album
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__)

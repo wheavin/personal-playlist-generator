@@ -9,4 +9,4 @@ app = Flask(__name__)
 app.config.from_mapping(config)
 cache = Cache(app)
 
-from app import playlists, recommendations
+from app import playlists, recommendations, new_releases

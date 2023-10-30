@@ -1,23 +1,17 @@
 #!/usr/bin/python3
 
 import json
-import unittest
-from unittest import mock
 from unittest.mock import patch
 
 from spotipy import Spotify, SpotifyException
 
+from app.tests.test_base import TestBase, read_json_content
 from playlist_generator import app
 
 HEADERS = {'Content-Type': 'application/json'}
 
 
-class TestPlaylists(unittest.TestCase):
-
-    def setUp(self) -> None:
-        app.config['TESTING'] = True
-        mock_token = mock.patch('SpotifyOAuth.get_access_token')
-        mock_token.return_value = "fake_token"
+class TestPlaylists(TestBase):
 
     @patch.object(Spotify, 'current_user_playlists')
     def test_get_all_playlists_returns_multiple_items(self, mock_playlists):
@@ -166,8 +160,3 @@ class TestPlaylists(unittest.TestCase):
             self.assertIn(b"Playlist name must be provided", response.data)
         mock_playlist_create.assert_not_called()
         mock_playlist_add_items.assert_not_called()
-
-
-def read_json_content(filename):
-    with open(filename) as json_file:
-        return json.load(json_file)

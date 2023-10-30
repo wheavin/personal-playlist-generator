@@ -1,24 +1,16 @@
 #!/usr/bin/python3
 
-
-import json
-import unittest
-from unittest import mock
 from unittest.mock import patch
 
 from spotipy import Spotify, SpotifyException
 
+from app.tests.test_base import TestBase, read_json_content
 from playlist_generator import app
 
 HEADERS = {'Content-Type': 'multipart/form-data'}
 
 
-class TestRecommendations(unittest.TestCase):
-
-    def setUp(self) -> None:
-        app.config['TESTING'] = True
-        mock_token = mock.patch('SpotifyOAuth.get_access_token')
-        mock_token.return_value = "fake_token"
+class TestRecommendations(TestBase):
 
     @patch.object(Spotify, 'recommendation_genre_seeds')
     def test_get_recommendation_genre_seeds_returns_multiple_items(self, mock_recommendation_genre_seeds):
@@ -73,8 +65,3 @@ class TestRecommendations(unittest.TestCase):
         with app.test_client() as http_client:
             response = http_client.post('recommendations-genre-items', headers=HEADERS, data=form_data)
             self.assertEqual(200, response.status_code)
-
-
-def read_json_content(filename):
-    with open(filename) as json_file:
-        return json.load(json_file)

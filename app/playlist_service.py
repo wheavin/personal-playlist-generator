@@ -2,6 +2,7 @@
 
 from spotipy import SpotifyException
 
+from app.album_list import AlbumList
 from app.playlist_content import Playlist, PlaylistContent
 from app.spotify_client import SpotifyClient
 from app.config.properties_reader import PropertiesReader
@@ -9,7 +10,7 @@ from utils.files import get_full_path
 
 ALBUMS_MAX_LIMIT = 20
 TRACKS_MAX_LIMIT = 100
-PLAYLIST_ITEMS_MAX_LIMIT = 50
+ITEMS_MAX_LIMIT = 50
 APP_CONFIG_FILE_PATH = "app/config/app-config.properties"
 
 
@@ -40,8 +41,8 @@ class PlaylistService(object):
             playlists_data = self.spotify_client.current_user_playlists(offset=offset)
             playlist_items = playlists_data["items"]
             all_playlist_items.extend(playlist_items)
-            if len(playlist_items) >= PLAYLIST_ITEMS_MAX_LIMIT:
-                offset += PLAYLIST_ITEMS_MAX_LIMIT
+            if len(playlist_items) >= ITEMS_MAX_LIMIT:
+                offset += ITEMS_MAX_LIMIT
             else:
                 break
 
@@ -77,8 +78,8 @@ class PlaylistService(object):
     def get_albums_playlist(self, album_ids, playlist_name):
         album_list_json = []
         for album_id_chunk in batch(album_ids, ALBUMS_MAX_LIMIT):
-            albums = self.spotify_client.albums(album_id_chunk)
-            album_list_json.extend(albums['albums'])
+            albums_json = self.spotify_client.albums(album_id_chunk)
+            album_list_json.extend(albums_json['albums'])
 
         playlist_content = PlaylistContent(name=playlist_name)
         playlist_content.parse_album_list(album_list_json)
@@ -103,3 +104,11 @@ class PlaylistService(object):
         except SpotifyException as ex:
             print(f"Error occurred getting genre recommendations: {ex}")
         return playlist_content
+
+    def get_new_releases(self):
+        try:
+            new_releases_json = self.spotify_client.new_releases(limit=50)
+            return AlbumList.of(new_releases_json)
+        except SpotifyException as ex:
+            print(f"Error occurred getting new releases: {ex}")
+            return AlbumList.empty()
