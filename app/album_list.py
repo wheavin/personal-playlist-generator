@@ -32,5 +32,12 @@ class AlbumList:
             albums.append(Album(name=album_name, album_uri=album_uri, artist=album_artist_name))
         return albums
 
+    def add(self, album_content_json):
+        if album_content_json is None or len(album_content_json) <= 0:
+            return 0
+        albums_parsed = self._parse_album_content(album_content_json)
+        self.albums.extend(albums_parsed)
+        return len(albums_parsed)
+
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__)

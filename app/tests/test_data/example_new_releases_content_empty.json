@@ -1,0 +1,11 @@
+{
+  "albums": {
+    "href": "https://api.spotify.com/v1/browse/new-releases?country=IE&offset=6650&limit=50",
+    "items": [],
+    "limit": 50,
+    "next": null,
+    "offset": 6650,
+    "previous": "https://api.spotify.com/v1/browse/new-releases?country=IE&offset=6600&limit=50",
+    "total": 100
+  }
+}

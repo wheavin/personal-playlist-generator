@@ -3,14 +3,15 @@
 from spotipy import SpotifyException
 
 from app.album_list import AlbumList
+from app.config.properties_reader import PropertiesReader
 from app.playlist_content import Playlist, PlaylistContent
 from app.spotify_client import SpotifyClient
-from app.config.properties_reader import PropertiesReader
 from utils.files import get_full_path
 
 ALBUMS_MAX_LIMIT = 20
 TRACKS_MAX_LIMIT = 100
 ITEMS_MAX_LIMIT = 50
+NEW_RELEASES_MAX_LIMIT = 200
 APP_CONFIG_FILE_PATH = "app/config/app-config.properties"
 
 
@@ -96,7 +97,6 @@ class PlaylistService(object):
     def get_recommendations_for_genre(self, genre_name):
         if not genre_name:
             return PlaylistContent.empty()
-
         playlist_content = PlaylistContent(name="Recommendations for genre: " + genre_name)
         try:
             recommendations_for_genre_json = self.spotify_client.recommendations(seed_genres=[genre_name], limit=30)
@@ -107,8 +107,15 @@ class PlaylistService(object):
 
     def get_new_releases(self):
         try:
-            new_releases_json = self.spotify_client.new_releases(limit=50)
-            return AlbumList.of(new_releases_json)
+            new_releases = AlbumList()
+            offset = 0
+            while len(new_releases.albums) < NEW_RELEASES_MAX_LIMIT:
+                new_releases_json = self.spotify_client.new_releases(limit=ITEMS_MAX_LIMIT, offset=offset)
+                releases_added_count = new_releases.add(new_releases_json)
+                if releases_added_count == 0:
+                    break
+                offset += ITEMS_MAX_LIMIT
+            return new_releases
         except SpotifyException as ex:
             print(f"Error occurred getting new releases: {ex}")
             return AlbumList.empty()

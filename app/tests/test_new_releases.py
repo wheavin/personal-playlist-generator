@@ -31,6 +31,14 @@ class TestNewReleases(TestBase):
             self.assertIn(b'No new releases at this time', response.data)
 
     @patch.object(Spotify, 'new_releases')
+    def test_get_new_releases_returns_no_items(self, mock_new_releases):
+        mock_new_releases.return_value = read_json_content("test_data/example_new_releases_content_empty.json")
+        with app.test_client() as http_client:
+            response = http_client.get('/new-releases')
+            self.assertEqual(200, response.status_code)
+            self.assertIn(b'No new releases at this time', response.data)
+
+    @patch.object(Spotify, 'new_releases')
     def test_get_new_releases_throws_exception(self, mock_new_releases):
         mock_new_releases.side_effect = SpotifyException(500, 1, "Error getting new releases")
         with app.test_client() as http_client:
