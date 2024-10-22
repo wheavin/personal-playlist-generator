@@ -51,7 +51,7 @@ class PlaylistService(object):
         for playlist_item in all_playlist_items:
             playlist = Playlist(name=playlist_item["name"], playlist_id=playlist_item["id"])
             playlists.append(playlist)
-        return playlists
+        return sorted(playlists, key=lambda playlist: playlist.name.lower())
 
     def get_playlist_content_by_name(self, playlist_name):
         all_playlists = self.get_all_playlists()

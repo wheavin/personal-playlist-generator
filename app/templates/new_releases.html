@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h2>New Releases</h2>
+<h3>New Releases</h3>
 
 <div class="media-body">
     <ul>
         {% for new_release in new_releases.albums %}
-        <li>
+        <li class="playlist-item">
             <b>{{ new_release.artist }}</b> - {{ new_release.name }}
         </li>
         {% endfor %}

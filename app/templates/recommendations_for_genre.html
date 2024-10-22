@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h2>Recommendations for Genre</h2>
+<h3>Recommendations for Genre</h3>
 
 <div class="select-genre">
     <form action="/recommendations-genre-items" method="post">
@@ -18,7 +18,7 @@
 <div class="media-body">
     <ul>
         {% for playlist_track in playlist_content.tracks %}
-        <li>
+        <li class="playlist-item">
             <b>{{ playlist_track.title }}</b><br>
             {{ playlist_track.artist.name }} - {{ playlist_track.album.name }}
             <br>

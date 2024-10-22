@@ -1,0 +1,36 @@
+body {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #FFFFFF;
+    font-weight: normal;
+    text-decoration: none;
+    background-color:#00332B;
+    text-align: center;
+}
+
+a {
+    color: #FFFFFF;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.banner {
+    text-align: center;
+}
+
+.playlist-item {
+    padding: 10px;
+}

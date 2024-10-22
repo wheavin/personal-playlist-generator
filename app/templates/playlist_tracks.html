@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block body %}
-<h2>{{ playlist_content.name }}</h2>
+<h3>{{ playlist_content.name }}</h3>
 <div class="media-body">
     <ul>
         {% for playlist_track in playlist_content.tracks %}
-        <li>
+        <li class="playlist-item">
             <b>{{ playlist_track.title }}</b><br>
             {{ playlist_track.artist.name }} - {{ playlist_track.album.name }}
             <br>
