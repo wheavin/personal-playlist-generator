@@ -1,8 +1,8 @@
 body {
     font-family: "Courier New", Courier, monospace;
     font-size: 13px;
-    letter-spacing: 2px;
-    word-spacing: 2px;
+    letter-spacing: 1px;
+    word-spacing: 1px;
     color: #FFFFFF;
     font-weight: normal;
     text-decoration: none;
@@ -27,8 +27,16 @@ ul {
     list-style-type: none;
 }
 
+.header {
+    background-color: #001A11;
+    padding: 5px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
 .banner {
     text-align: center;
+    padding: 5px;
 }
 
 .playlist-item {
