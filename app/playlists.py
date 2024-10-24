@@ -3,7 +3,7 @@
 from flask import render_template, request, make_response
 from spotipy import SpotifyException
 
-from app import app
+from app import app, cache
 from app.playlist_service import PlaylistService
 
 playlist_service = PlaylistService()
@@ -16,6 +16,7 @@ def index():
 
 
 @app.route('/all-playlists', methods=['GET'])
+@cache.cached()
 def get_all_playlists():
     try:
         playlists = playlist_service.get_all_playlists()
@@ -32,6 +33,7 @@ def get_all_playlists():
 
 
 @app.route('/playlist', methods=['GET'])
+@cache.cached()
 def get_playlist():
     playlist_name, playlist_content = _get_playlist_content()
     if playlist_content and playlist_content.tracks:
@@ -42,6 +44,7 @@ def get_playlist():
 
 
 @app.route('/playlist-albums', methods=['GET'])
+@cache.cached()
 def get_albums_for_playlist_tracks():
     """
     Returns a playlist comprised of the albums of the provided tracks.

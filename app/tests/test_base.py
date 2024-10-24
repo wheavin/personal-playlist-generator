@@ -3,7 +3,7 @@ import json
 import unittest
 from unittest import mock
 
-from playlist_generator import app
+from playlist_generator import app, cache
 
 
 def read_json_content(filename):
@@ -17,3 +17,4 @@ class TestBase(unittest.TestCase):
         app.config['TESTING'] = True
         mock_token = mock.patch('SpotifyOAuth.get_access_token')
         mock_token.return_value = "fake_token"
+        cache.clear()

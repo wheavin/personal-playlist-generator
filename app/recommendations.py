@@ -2,7 +2,7 @@
 
 from flask import render_template, request
 
-from app import app
+from app import app, cache
 from app.playlist_content import PlaylistContent
 from app.playlist_service import PlaylistService
 
@@ -12,6 +12,7 @@ cached_genre_seeds = []
 
 
 @app.route('/recommendations-genre', methods=['GET'])
+@cache.cached()
 def get_recommendation_genre_seeds():
     if not cached_genre_seeds:
         genre_seeds = playlist_service.get_recommendation_genre_seeds()
