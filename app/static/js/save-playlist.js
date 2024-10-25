@@ -1,7 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function() {
     $("#savePlaylistButton").click(function () {
         var newPlaylistName = $("#playlistNameField").val();
-        var playlistContentJson = JSON.parse({{ playlist_content.to_json() | tojson }});
         var playlistTracks = playlistContentJson["tracks"];
         var playlistDataToPost = JSON.stringify({ "name": newPlaylistName, "tracks": playlistTracks });
         console.log("Creating playlist '" + newPlaylistName + "'");
